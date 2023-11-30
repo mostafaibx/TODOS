@@ -15,9 +15,9 @@ const icons = [
 
 <template>
   <div class="icons-picker">
-    <label for="">Icon: </label>
-    <select class="icon" id="listOptions" name="listOptions">
-      <option v-for="i in icons" value="i" v-html="i"></option>
+    <label for="icon">Icon: </label>
+    <select class="icon" id="icon" name="icon">
+      <option v-for="i in icons" :value="i" v-html="i"></option>
     </select>
   </div>
 </template>

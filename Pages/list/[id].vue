@@ -1,5 +1,5 @@
 <script setup>
-import MainHeader from "../Layout/MainHeader.vue";
+import MainHeader from "~~/Layout/MainHeader.vue";
 import TodoList from "~~/Layout/TodoList.vue";
 </script>
 

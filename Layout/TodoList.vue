@@ -11,6 +11,10 @@ const closeInput = (e) => {
     addTask.value = false;
   }
 };
+
+const { data: list } = await useFetch(`/api/lists/?id=${useRoute().params.id}`);
+// eslint-disable-next-line no-console
+console.log(list);
 </script>
 
 <template>

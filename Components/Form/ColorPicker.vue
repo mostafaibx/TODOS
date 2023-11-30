@@ -1,11 +1,30 @@
 <script setup>
-import ColorInput from "./ColorInput.vue";
+const colors = [
+  "#10B981",
+  "#16A34A",
+  "#1E40AF",
+  "#F59E0B",
+  "#84CC16",
+  "#7C3AED",
+  "#9333EA",
+  "#E11D48",
+  "#4c51bf",
+];
 </script>
 <template>
   <div class="color-picker">
-    <label for="">Color:</label>
+    <label for="icon">Color:</label>
     <div>
-      <ColorInput v-for="i in 5" :key="i" />
+      <input
+        v-for="c in colors"
+        :key="c"
+        :value="c"
+        class="color-option"
+        type="radio"
+        name="color"
+        id="color"
+        :style="{ backgroundColor: c }"
+      />
     </div>
   </div>
 </template>
@@ -15,6 +34,9 @@ import ColorInput from "./ColorInput.vue";
   @apply h-10 p-2 flex justify-around items-center;
 }
 .color-picker div {
-  @apply w-[190px];
+  @apply w-[350px];
+}
+.color-option {
+  @apply mx-2 w-5 h-5 rounded-full appearance-none cursor-pointer hover:w-6 hover:h-6 hover:border-2 hover:border-slate-300 hover:shadow-sm hover:shadow-slate-500 checked:w-6 checked:h-6 checked:border-2 checked:border-slate-300 checked:shadow-sm checked:shadow-slate-500 transition-all duration-200;
 }
 </style>

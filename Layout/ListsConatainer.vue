@@ -2,16 +2,24 @@
 import CreateListcard from "~~/Components/CreateListcard.vue";
 import ListCard from "~~/Components/ListCard.vue";
 import ListForm from "~~/Components/ListForm.vue";
+
+const { data } = await useFetch("/api/list/");
+const lists = JSON.parse(data.value.body);
+
+const selectListHandler = (e) => {
+  navigateTo(`/list/${e}`);
+};
 </script>
 
 <template>
   <div class="lists-container">
     <div class="lists">
-      <ListCard />
-      <ListCard />
-      <ListCard />
-      <ListCard />
-      <ListCard />
+      <ListCard
+        v-for="list in lists"
+        :key="list.id"
+        :list="list"
+        @click="selectListHandler(list.id)"
+      />
       <CreateListcard />
       <ListForm class="add-list" />
     </div>
