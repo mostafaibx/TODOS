@@ -1,10 +1,22 @@
 <script setup>
 import TaskItem from "./TaskItem.vue";
+
+defineProps({
+  tasks: {
+    type: Array,
+    default: () => [],
+  },
+});
 </script>
 
 <template>
   <ul class="items-wrapper">
-    <TaskItem v-for="i in 5" :key="i" />
+    <TaskItem
+      v-for="t in tasks"
+      :key="t"
+      :task="t"
+      @task-deleted="$emit('taskDeleted', $event)"
+    />
   </ul>
 </template>
 

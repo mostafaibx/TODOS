@@ -5,7 +5,7 @@ export default eventHandler(async (event: H3Event) => {
   const { params } = event.context;
 
   try {
-    const task = await prisma.list.findFirst({ where: { id: params.id } });
+    const task = await prisma.task.findFirst({ where: { id: params.id } });
     if (!task) {
       throw createError({
         statusCode: 404,
@@ -13,7 +13,7 @@ export default eventHandler(async (event: H3Event) => {
       });
     }
 
-    prisma.task.delete({ where: { id: params.id } });
+    await prisma.task.delete({ where: { id: params.id } });
 
     return {
       statusCode: 201,

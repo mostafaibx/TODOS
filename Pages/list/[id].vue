@@ -1,10 +1,11 @@
 <script setup>
-import MainHeader from "~~/Layout/MainHeader.vue";
-import TodoList from "~~/Layout/TodoList.vue";
+definePageMeta({
+  layout: 'main-header'
+})
+
 </script>
 
 <template>
-  <MainHeader />
   <div class="home-wrapper">
     <TodoList />
   </div>

@@ -1,29 +1,29 @@
 <script setup>
 const clock = () => {
-  const date = new Date();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
-  return { hours, minutes, seconds };
-};
+  const date = new Date()
+  const hours = date.getHours()
+  const minutes = date.getMinutes()
+  const seconds = date.getSeconds()
+  return { hours, minutes, seconds }
+}
 
-const hours = ref(clock().hours);
-const minutes = ref(clock().minutes);
-const sec = ref(clock().seconds);
+const hours = ref(clock().hours)
+const minutes = ref(clock().minutes)
+const sec = ref(clock().seconds)
 
 const updateClock = () => {
-  hours.value = clock().hours;
-  minutes.value = clock().minutes;
-  sec.value = clock().seconds;
-};
+  hours.value = clock().hours
+  minutes.value = clock().minutes
+  sec.value = clock().seconds
+}
 
 // Set interval and save the interval ID
-const intervalId = setInterval(updateClock, 1000);
+const intervalId = setInterval(updateClock, 1000)
 
 // Clear the interval when the component is about to be destroyed
 onBeforeUnmount(() => {
-  clearInterval(intervalId);
-});
+  clearInterval(intervalId)
+})
 </script>
 
 <template>
@@ -37,8 +37,12 @@ onBeforeUnmount(() => {
     <div class="clock-sec">
       <h1>{{ sec }}</h1>
     </div>
-    <h1 v-if="hours >= 5 && hours < 17" class="icon">&#x2600;</h1>
-    <h1 v-else-if="hours >= 17 || hours < 5" class="icon">&#x1F31B;</h1>
+    <h1 v-if="hours >= 5 && hours < 17" class="icon">
+      &#x2600;
+    </h1>
+    <h1 v-else-if="hours >= 17 || hours < 5" class="icon">
+      &#x1F31B;
+    </h1>
   </div>
 </template>
 

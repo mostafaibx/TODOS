@@ -1,8 +1,34 @@
+<script setup>
+const emit = defineEmits('taskAdded')
+
+const errorMsg = ref('')
+const addTaskHandler = async (e) => {
+  const task = {
+    title: e.target.listName.value,
+    completed: false,
+    listId: useRoute().params.id
+  }
+  const { error } = await useFetch('/api/task/', {
+    method: 'POST',
+    body: task
+  })
+  emit('taskAdded', task)
+  errorMsg.value = error.value.message
+}
+</script>
+
 <template>
-  <div class="input-wrapper">
-    > <input class="input-task" type="text" placeholder="Enter Task Name" />
+  <form class="input-wrapper" @submit.prevent="addTaskHandler">
+    <h1>{{ errorMsg }}</h1>
+    >
+    <input
+      id="listName"
+      class="input-task"
+      type="text"
+      placeholder="Enter Task Name"
+    >
     <button>Add Task</button>
-  </div>
+  </form>
 </template>
 
 <style scoped>

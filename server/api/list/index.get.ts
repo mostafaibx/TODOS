@@ -5,7 +5,7 @@ export default eventHandler(async (event: H3Event) => {
 
   try {
     const lists = await prisma.list.findMany();
-    return { statusCode: 200, body: JSON.stringify(lists) };
+    return lists;
   } catch (error) {
     return {
       statusCode: 500,

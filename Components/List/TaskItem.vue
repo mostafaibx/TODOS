@@ -1,17 +1,43 @@
 <script setup>
-const taskStatu = ref(true);
+const props = defineProps({
+  task: {
+    type: Object,
+    default: () => {}
+  }
+})
 
-const taskStatuHandler = () => {
-  taskStatu.value = !taskStatu.value;
-};
+const completed = ref(props.task.completed)
+const emit = defineEmits(['taskDeleted'])
+
+const taskStatuHandler = async () => {
+  completed.value = !completed.value
+  await useFetch(`/api/task/${props.task.id}`, {
+    method: 'PUT',
+    body: { completed: completed.value }
+  })
+}
+
+const deleteTaskHandler = async () => {
+  const taskId = props.task.id
+  const { error } = await useFetch(`/api/task/${props.task.id}`, {
+    method: 'DELETE'
+  })
+  emit('taskDeleted', { taskId, source: 'taskDeleted' })
+}
 </script>
 
 <template>
   <li class="todo-item">
-    <p :class="{ done: !taskStatu, undone: taskStatu }">> Task 1</p>
+    <p :class="{ done: !completed, undone: completed }">
+      > {{ task.title }}
+    </p>
     <div class="action">
-      <h1 @click="taskStatuHandler">{{ taskStatu ? "Done" : "Undone" }}</h1>
-      <h1 class="delete">Delete</h1>
+      <h1 @click="taskStatuHandler">
+        {{ completed ? "Done" : "Undone" }}
+      </h1>
+      <h1 class="delete" @click="deleteTaskHandler">
+        Delete
+      </h1>
     </div>
   </li>
 </template>

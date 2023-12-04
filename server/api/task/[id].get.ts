@@ -4,8 +4,10 @@ export default eventHandler(async (event: H3Event) => {
   const prisma = event.context.prisma;
   const { params } = event.context;
 
-  const task = await prisma.list.findFirst({ where: { id: params.id } });
-  if (!list) {
+  const task = await prisma.list.findFirst({
+    where: { id: params.id },
+  });
+  if (!task) {
     throw createError({
       statusCode: 404,
       statusMessage: `Failed to find tasks with id ${params.id}`,

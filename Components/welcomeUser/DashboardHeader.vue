@@ -1,10 +1,13 @@
 <script setup>
-import ClockComp from "~~/Components/ClockComp.vue";
+import ClockComp from './ClockComp.vue'
+
 </script>
 
 <template>
   <div class="dashboard-header">
-    <h1 class="msg">Hello! UserName</h1>
+    <h1 class="msg">
+      Hello! UserName
+    </h1>
     <ClockComp />
   </div>
 </template>

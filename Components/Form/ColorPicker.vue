@@ -1,15 +1,15 @@
 <script setup>
 const colors = [
-  "#10B981",
-  "#16A34A",
-  "#1E40AF",
-  "#F59E0B",
-  "#84CC16",
-  "#7C3AED",
-  "#9333EA",
-  "#E11D48",
-  "#4c51bf",
-];
+  '#10B981',
+  '#16A34A',
+  '#1E40AF',
+  '#F59E0B',
+  '#84CC16',
+  '#7C3AED',
+  '#9333EA',
+  '#E11D48',
+  '#4c51bf'
+]
 </script>
 <template>
   <div class="color-picker">
@@ -17,14 +17,14 @@ const colors = [
     <div>
       <input
         v-for="c in colors"
+        id="color"
         :key="c"
         :value="c"
         class="color-option"
         type="radio"
         name="color"
-        id="color"
         :style="{ backgroundColor: c }"
-      />
+      >
     </div>
   </div>
 </template>

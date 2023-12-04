@@ -1,11 +1,11 @@
 <script setup>
 definePageMeta({
-  layout: 'main-header'
+  layout: 'logout-header'
 })
 </script>
 
 <template>
   <div>
-    <h1>About Page</h1>
+    <h1>Login Page</h1>
   </div>
 </template>
