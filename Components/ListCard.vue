@@ -1,7 +1,10 @@
-<script setup>
+<script setup lang='ts'>
+import { PropType } from 'nuxt/dist/app/compat/capi'
+import { List } from '~~/types'
+
 const props = defineProps({
   list: {
-    type: Object,
+    type: Object as PropType<List>,
     required: true
   }
 })

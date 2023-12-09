@@ -1,46 +1,33 @@
-<script setup>
-const clock = () => {
-  const date = new Date()
-  const hours = date.getHours()
-  const minutes = date.getMinutes()
-  const seconds = date.getSeconds()
-  return { hours, minutes, seconds }
-}
+<script setup lang="ts">
+import useClock from '~~/utils/clock'
 
-const hours = ref(clock().hours)
-const minutes = ref(clock().minutes)
-const sec = ref(clock().seconds)
+const { state, startClock, stopClock } = useClock()
 
-const updateClock = () => {
-  hours.value = clock().hours
-  minutes.value = clock().minutes
-  sec.value = clock().seconds
-}
-
-// Set interval and save the interval ID
-const intervalId = setInterval(updateClock, 1000)
-
-// Clear the interval when the component is about to be destroyed
-onBeforeUnmount(() => {
-  clearInterval(intervalId)
+onMounted(() => {
+  startClock()
 })
+
+onUnmounted(() => {
+  stopClock()
+})
+
 </script>
 
 <template>
   <div class="clock">
     <div class="clock-side">
-      <h1>{{ hours }}</h1>
+      <h1>{{ state.hours }}</h1>
     </div>
     <div class="clock-side">
-      <h1>{{ minutes }}</h1>
+      <h1>{{ state.minutes }}</h1>
     </div>
     <div class="clock-sec">
-      <h1>{{ sec }}</h1>
+      <h1>{{ state.seconds }}</h1>
     </div>
-    <h1 v-if="hours >= 5 && hours < 17" class="icon">
+    <h1 v-if="state.hours >= 5 && state.hours < 17" class="icon">
       &#x2600;
     </h1>
-    <h1 v-else-if="hours >= 17 || hours < 5" class="icon">
+    <h1 v-else-if="state.hours >= 17 || state.hours < 5" class="icon">
       &#x1F31B;
     </h1>
   </div>

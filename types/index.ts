@@ -1,34 +1,49 @@
-export type colorstest =
-  | "emerald-600"
-  | "green-500"
-  | "sky-700"
-  | "amber-400"
-  | "lime-600"
-  | "violet-800"
-  | "fuchsia-700"
-  | "rose-600"
-  | "indigo-700";
-export type colors =
-  | "#10B981"
-  | "#16A34A"
-  | "#1E40AF"
-  | "#F59E0B"
-  | "#84CC16"
-  | "#7C3AED"
-  | "#9333EA"
-  | "#E11D48"
-  | "#4c51bf";
+
+export enum colors {
+  '#10B981',
+  '#16A34A',
+  '#1E40AF',
+  '#F59E0B',
+  '#84CC16',
+  '#7C3AED',
+  '#9333EA',
+  '#E11D48',
+  '#4c51bf',
+}
+
+export enum icons {
+  '&#127891;',
+  '&#127944;',
+  '&#127821;',
+  '&#x1F5DD;',
+  '&#x270F;',
+  '&#127838;',
+  '&#x1F575;',
+  '&#128161;',
+  '&#129516;',
+  '&#128181;'
+}
 
 export type Task = {
-  id: number;
+  id?: number;
+  listId: string;
   title: string;
-  statu: boolean;
+  completed: boolean;
 };
 
 export type List = {
-  id: number;
+  id?: number;
+  userId: string;
   title: string;
   color: colors;
-  icon: string;
-  tasks: Task[] | [];
+  icon: icons;
+  tasks?: Task[] | [];
 };
+
+export type User = {
+  id?: number;
+  name: string;
+  email: string;
+  password: string;
+  lists?: List[] | [];
+}

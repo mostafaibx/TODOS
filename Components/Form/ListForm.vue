@@ -1,31 +1,37 @@
-<script setup>
+<script setup lang="ts">
 import ColorPicker from './ColorPicker.vue'
 import IconsPicker from './IconsPicker.vue'
+import { List } from '~~/types'
+import { validateList } from '~~/utils/validations'
 
 const emit = defineEmits(['listAdded'])
 
-const errorMsg = ref(null)
+const errorMsg = ref('')
 
-const addListHandler = async (e) => {
-  const listData = {
+// check form handling
+const addListHandler = async (e: any) => {
+  const listData: List = {
+    userId: 'id',
     title: e.target.listName.value,
     color: e.target.color.value,
     icon: e.target.icon.value
   }
-  if (listData.title.trim() === '') {
-    errorMsg.value = 'List name cannot be empty'
+  const validationError = validateList(listData)
+
+  if (validationError) {
+    errorMsg.value = validationError
     return
   }
-  if (listData.color.trim() === '') {
-    errorMsg.value = 'List color cannot be empty'
-    return
-  }
+
   const { error } = await useFetch('/api/list/', {
     method: 'POST',
     body: listData
   })
 
-  errorMsg.value = error.value.message
+  if (error.value) {
+    errorMsg.value = error.value.message
+    return
+  }
 
   emit('listAdded', listData)
 }

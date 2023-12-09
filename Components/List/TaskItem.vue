@@ -1,14 +1,18 @@
-<script setup>
+<script setup lang="ts">
+import { PropType } from 'nuxt/dist/app/compat/capi'
+import { Task } from '~~/types'
+
 const props = defineProps({
   task: {
-    type: Object,
+    type: Object as PropType<Task>,
     default: () => {}
   }
 })
 
-const completed = ref(props.task.completed)
 const emit = defineEmits(['taskDeleted'])
+const completed = ref(props.task.completed)
 
+// handle error
 const taskStatuHandler = async () => {
   completed.value = !completed.value
   await useFetch(`/api/task/${props.task.id}`, {
@@ -19,7 +23,7 @@ const taskStatuHandler = async () => {
 
 const deleteTaskHandler = async () => {
   const taskId = props.task.id
-  const { error } = await useFetch(`/api/task/${props.task.id}`, {
+  await useFetch(`/api/task/${props.task.id}`, {
     method: 'DELETE'
   })
   emit('taskDeleted', { taskId, source: 'taskDeleted' })

@@ -1,20 +1,21 @@
-<script setup>
+<script setup lang='ts'>
 import ListForm from './Form/ListForm.vue'
 import CreateListcard from '~~/Components/CreateListcard.vue'
 import ListCard from '~~/Components/ListCard.vue'
-import { useListState } from '~~/composable/state'
+import { List } from '~~/types'
 
+// check how to handle data fetching as it is ususally in lifecycle hook
 const { data } = await useFetch('/api/list/')
 
 const showForm = ref(false)
 
-const lists = data.value
+const lists: List[] = data.value as List[]
 
-const selectListHandler = (e) => {
+const selectListHandler = (e: string) => {
   navigateTo(`/list/${e}`)
 }
 
-const addListHandler = (payload) => {
+const addListHandler = (payload: List) => {
   lists.push(payload)
 }
 

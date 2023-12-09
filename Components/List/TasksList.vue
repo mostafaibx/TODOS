@@ -1,12 +1,14 @@
-<script setup>
-import TaskItem from "./TaskItem.vue";
+<script setup lang='ts'>
+import { PropType } from 'nuxt/dist/app/compat/capi'
+import TaskItem from './TaskItem.vue'
+import { Task } from '~~/types'
 
 defineProps({
   tasks: {
-    type: Array,
-    default: () => [],
-  },
-});
+    type: Array as PropType<Task[]>,
+    default: () => []
+  }
+})
 </script>
 
 <template>

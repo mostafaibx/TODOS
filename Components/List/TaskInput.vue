@@ -1,19 +1,32 @@
-<script setup>
-const emit = defineEmits('taskAdded')
+<script setup lang="ts">
+import { Task } from '~~/types'
+import { validateTask } from '~~/utils/validations'
+
+const emit = defineEmits(['taskAdded'])
 
 const errorMsg = ref('')
 const addTaskHandler = async (e) => {
-  const task = {
+  const task: Task = {
     title: e.target.listName.value,
     completed: false,
-    listId: useRoute().params.id
+    listId: useRoute().params.id as string
   }
+
+  const validationError = validateTask(task)
+  if (validationError) {
+    errorMsg.value = validationError
+    return
+  }
+
   const { error } = await useFetch('/api/task/', {
     method: 'POST',
     body: task
   })
   emit('taskAdded', task)
-  errorMsg.value = error.value.message
+  if (error.value) {
+    errorMsg.value = error.value.message
+  }
+  emit('taskAdded', { payload: task, source: 'taskAdded' })
 }
 </script>
 

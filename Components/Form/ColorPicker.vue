@@ -1,29 +1,20 @@
-<script setup>
-const colors = [
-  '#10B981',
-  '#16A34A',
-  '#1E40AF',
-  '#F59E0B',
-  '#84CC16',
-  '#7C3AED',
-  '#9333EA',
-  '#E11D48',
-  '#4c51bf'
-]
+<script setup lang="ts">
+import { colors } from '~~/types'
+
 </script>
 <template>
   <div class="color-picker">
     <label for="icon">Color:</label>
     <div>
       <input
-        v-for="c in colors"
+        v-for="c in Object.values(colors)"
         id="color"
         :key="c"
         :value="c"
         class="color-option"
         type="radio"
         name="color"
-        :style="{ backgroundColor: c }"
+        :style="{ backgroundColor: c as string}"
       >
     </div>
   </div>
