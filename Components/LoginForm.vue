@@ -4,7 +4,7 @@ const email = ref('')
 const password = ref('')
 const errorMsg = ref('')
 
-const loginHandler = () => {
+const loginHandler = async () => {
   const userData = {
     email: email.value,
     password: password.value
@@ -12,7 +12,11 @@ const loginHandler = () => {
   if (email.value.trim() === '' || password.value.trim() === '') {
     errorMsg.value = 'All fields are required'
   }
-  // handle login with API call
+
+  await useFetch('/api/auth/login/', {
+    method: 'POST',
+    body: userData
+  })
 }
 
 </script>

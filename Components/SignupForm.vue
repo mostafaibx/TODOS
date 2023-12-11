@@ -6,9 +6,9 @@ const password = ref('')
 const confirmPassword = ref('')
 const errorMsg = ref('')
 
-const signupHandler = () => {
+const signupHandler = async () => {
   const userData = {
-    username: username.value,
+    name: username.value,
     email: email.value,
     password: password.value,
     confirmPassword: confirmPassword.value
@@ -21,6 +21,10 @@ const signupHandler = () => {
   }
 
   // handle signup with API call
+  await useFetch('/api/auth/register/', {
+    method: 'POST',
+    body: userData
+  })
 
   username.value = ''
   email.value = ''

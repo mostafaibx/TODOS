@@ -34,5 +34,6 @@ model User {
   name        String
   email       String
   photo       String
+  password    String
   lists       List[]
 }
