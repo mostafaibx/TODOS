@@ -5,18 +5,10 @@ const password = ref('')
 const errorMsg = ref('')
 
 const loginHandler = async () => {
-  const userData = {
-    email: email.value,
-    password: password.value
+  const result = await useLogin(email.value, password.value)
+  if (result?.error) {
+    errorMsg.value = result.error
   }
-  if (email.value.trim() === '' || password.value.trim() === '') {
-    errorMsg.value = 'All fields are required'
-  }
-
-  await useFetch('/api/auth/login/', {
-    method: 'POST',
-    body: userData
-  })
 }
 
 </script>
@@ -24,6 +16,9 @@ const loginHandler = async () => {
 <template>
   <form class="login-form" @submit.prevent="loginHandler">
     <h1>Login...</h1>
+    <p v-if="errorMsg" class="error">
+      {{ errorMsg }}
+    </p>
     <label for="email">Email</label>
     <input id="email" v-model="email" name="email" type="email">
     <label for="password">Password</label>
@@ -53,4 +48,9 @@ h1 {
 .login-form button {
   @apply w-60 p-2 m-2 rounded-lg hover:bg-slate-500 bg-slate-600 drop-shadow-2xl text-white hover:text-slate-800 font-mono text-xl;
 }
+
+.error{
+  @apply text-red-500 text-center text-xl font-mono mb-2;
+}
 </style>
+~~/composables/useLogin

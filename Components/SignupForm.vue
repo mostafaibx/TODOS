@@ -13,19 +13,11 @@ const signupHandler = async () => {
     password: password.value,
     confirmPassword: confirmPassword.value
   }
-  const validationError = validateUserSignup(userData)
 
-  if (validationError) {
-    errorMsg.value = validationError
-    return
+  const result = await useSignup(userData)
+  if (result?.error) {
+    errorMsg.value = result.error
   }
-
-  // handle signup with API call
-  await useFetch('/api/auth/register/', {
-    method: 'POST',
-    body: userData
-  })
-
   username.value = ''
   email.value = ''
   password.value = ''
@@ -37,6 +29,9 @@ const signupHandler = async () => {
 <template>
   <form class="signup-form" @submit.prevent="signupHandler">
     <h1>Signup...</h1>
+    <p v-if="errorMsg" class="error">
+      {{ errorMsg }}
+    </p>
     <label for="username">Username</label>
     <input id="username" v-model="username" name="username" type="text">
     <label for="email">Email</label>
@@ -80,4 +75,9 @@ h1 {
 .links {
   @apply flex justify-center items-center;
 }
+
+.error{
+  @apply text-red-500 text-center text-xl font-mono mb-2;
+}
 </style>
+~~/composables/useSignup

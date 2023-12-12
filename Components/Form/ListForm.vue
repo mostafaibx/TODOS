@@ -40,7 +40,7 @@ const addListHandler = async (e: any) => {
 <template>
   <div class="form-container">
     <form class="list-form" @submit.prevent="addListHandler">
-      <h1 v-if="errorMsg">
+      <h1 v-if="errorMsg" class="error">
         {{ errorMsg }}
       </h1>
       <div>
@@ -66,5 +66,9 @@ const addListHandler = async (e: any) => {
 }
 input {
   @apply text-black;
+}
+
+.error{
+  @apply text-red-500 text-center text-xl font-mono mb-2;
 }
 </style>

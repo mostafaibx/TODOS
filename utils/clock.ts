@@ -1,4 +1,4 @@
-import { reactive, onUnmounted } from 'vue'
+import { reactive } from 'vue'
 
 const useClock = () => {
   const state = reactive({

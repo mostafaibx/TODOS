@@ -1,4 +1,4 @@
-<script setup lang="ts"S>
+<script setup lang="ts">
 import TaskInput from '~~/Components/List/TaskInput.vue'
 import TasksList from '~~/Components/List/TasksList.vue'
 import { List, Task } from '~~/types'
@@ -16,11 +16,12 @@ const closeInput = (e) => {
 
 const { data } = await useFetch(`/api/list/${useRoute().params.id}`)
 const list = data.value as unknown as List
-const updateTaskList = (emittedData: { payload: List | Task, source: string }) => {
-  if (emittedData.source === 'taskDeleted' && list.tasks) {
-    list.tasks = list.tasks.filter(t => t.id !== emittedData.payload.id)
-  } else if (emittedData.source === 'taskAdded' && list.tasks) {
-    list.tasks.push(emittedData.payload as Task)
+
+const updateTaskList = (emittedData: { payload: Task | string, source: string }) => {
+  const tasks = list.tasks
+  if (list.tasks) {
+    const updatedTasks = useUpdateTasks(emittedData, tasks)
+    list.tasks = updatedTasks
   }
 }
 

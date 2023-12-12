@@ -22,7 +22,6 @@ const addTaskHandler = async (e) => {
     method: 'POST',
     body: task
   })
-  emit('taskAdded', task)
   if (error.value) {
     errorMsg.value = error.value.message
   }

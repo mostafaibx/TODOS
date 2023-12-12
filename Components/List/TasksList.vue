@@ -2,7 +2,7 @@
 import { PropType } from 'nuxt/dist/app/compat/capi'
 import TaskItem from './TaskItem.vue'
 import { Task } from '~~/types'
-
+defineEmits(['taskDeleted'])
 defineProps({
   tasks: {
     type: Array as PropType<Task[]>,

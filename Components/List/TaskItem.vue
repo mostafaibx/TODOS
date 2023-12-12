@@ -26,7 +26,7 @@ const deleteTaskHandler = async () => {
   await useFetch(`/api/task/${props.task.id}`, {
     method: 'DELETE'
   })
-  emit('taskDeleted', { taskId, source: 'taskDeleted' })
+  emit('taskDeleted', { payload: taskId, source: 'taskDeleted' })
 }
 </script>
 

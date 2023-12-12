@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { colors } from '~~/types'
 
+// we can emit the color and use it as bg for form
 </script>
 <template>
   <div class="color-picker">
-    <label for="icon">Color:</label>
+    <label for="color">Color:</label>
     <div>
       <input
-        v-for="c in Object.values(colors)"
+        v-for="c in colors"
         id="color"
         :key="c"
         :value="c"
