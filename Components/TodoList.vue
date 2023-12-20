@@ -14,15 +14,14 @@ const closeInput = (e) => {
   }
 }
 
+// check how to handle data fetching
 const { data } = await useFetch(`/api/list/${useRoute().params.id}`)
 const list = data.value as unknown as List
 
 const updateTaskList = (emittedData: { payload: Task | string, source: string }) => {
   const tasks = list.tasks
-  if (list.tasks) {
-    const updatedTasks = useUpdateTasks(emittedData, tasks)
-    list.tasks = updatedTasks
-  }
+  const updatedTasks = useUpdateTasks(emittedData, tasks)
+  list.tasks = updatedTasks
 }
 
 </script>

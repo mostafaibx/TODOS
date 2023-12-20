@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Task } from '~~/types'
-import { validateTask } from '~~/utils/validations'
 
 const emit = defineEmits(['taskAdded'])
 
@@ -12,18 +11,9 @@ const addTaskHandler = async (e) => {
     listId: useRoute().params.id as string
   }
 
-  const validationError = validateTask(task)
-  if (validationError) {
-    errorMsg.value = validationError
-    return
-  }
-
-  const { error } = await useFetch('/api/task/', {
-    method: 'POST',
-    body: task
-  })
-  if (error.value) {
-    errorMsg.value = error.value.message
+  const result = useAddTask(task)
+  if (result?.error) {
+    errorMsg.value = result.error
   }
   emit('taskAdded', { payload: task, source: 'taskAdded' })
 }

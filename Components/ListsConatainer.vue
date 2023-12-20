@@ -4,10 +4,10 @@ import CreateListcard from '~~/Components/CreateListcard.vue'
 import ListCard from '~~/Components/ListCard.vue'
 import { List } from '~~/types'
 
-// check how to handle data fetching as it is ususally in lifecycle hook
-const { data } = await useFetch('/api/list/')
-
 const showForm = ref(false)
+
+// check how to handle data fetching
+const { data } = await useFetch('/api/list/')
 
 const lists: List[] = data.value as List[]
 

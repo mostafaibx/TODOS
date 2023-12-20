@@ -9,6 +9,8 @@ const loginHandler = async () => {
   if (result?.error) {
     errorMsg.value = result.error
   }
+  email.value = ''
+  password.value = ''
 }
 
 </script>

@@ -15,7 +15,7 @@ defineProps({
   <ul class="items-wrapper">
     <TaskItem
       v-for="t in tasks"
-      :key="t"
+      :key="t.id"
       :task="t"
       @task-deleted="$emit('taskDeleted', $event)"
     />
