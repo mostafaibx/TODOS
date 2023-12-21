@@ -2,7 +2,7 @@
 import LoginForm from '~~/Components/LoginForm.vue'
 
 definePageMeta({
-  layout: 'logout-header'
+  layout: 'main-header'
 
 })
 </script>
