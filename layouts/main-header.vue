@@ -24,12 +24,15 @@ const isAuthenticated = computed(() => {
           <NuxtLink v-if="!isAuthenticated" to="/Login" class="icon">
             Login
           </NuxtLink>
+          <NuxtLink v-if="isAuthenticated" to="/AboutPage">
+            About
+          </NuxtLink>
         </div>
-        <NuxtLink to="/AboutPage">
-          About
-        </NuxtLink>
       </div>
       <div class="user-info">
+        <NuxtLink v-if="!isAuthenticated" to="/AboutPage">
+          About
+        </NuxtLink>
         <HeaderLoggedinTab v-if="isAuthenticated" />
       </div>
     </div>
