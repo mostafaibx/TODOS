@@ -1,24 +1,37 @@
+<script setup lang="ts">
+const { status } = useAuth()
+
+const isAuthenticated = computed(() => {
+  return status.value === 'authenticated'
+})
+
+</script>
 
 <template>
   <div>
     <div class="header">
-      <div class="links">
-        <NuxtLink to="/" class="icon">
-          dashboard
-        </NuxtLink>
-        <NuxtLink to="/Insights" class="icon">
-          Insights
-        </NuxtLink>
-        <NuxtLink to="/Signup" class="icon">
-          Signup
-        </NuxtLink>
-        <NuxtLink to="/Login" class="icon">
-          Login
+      <div class="content">
+        <div class="links">
+          <NuxtLink to="/" class="icon">
+            dashboard
+          </NuxtLink>
+          <NuxtLink to="/Insights" class="icon">
+            Insights
+          </NuxtLink>
+          <NuxtLink v-if="!isAuthenticated" to="/Signup" class="icon">
+            Signup
+          </NuxtLink>
+          <NuxtLink v-if="!isAuthenticated" to="/Login" class="icon">
+            Login
+          </NuxtLink>
+        </div>
+        <NuxtLink to="/AboutPage">
+          About
         </NuxtLink>
       </div>
-      <NuxtLink to="/AboutPage">
-        About
-      </NuxtLink>
+      <div class="user-info">
+        <HeaderLoggedinTab v-if="isAuthenticated" />
+      </div>
     </div>
     <slot />
   </div>
@@ -29,6 +42,9 @@
   @apply text-white h-12 w-full bg-slate-900 flex justify-between items-center p-4 shadow-2xl;
 }
 .links {
+  @apply flex justify-between items-center;
+}
+.content {
   @apply flex justify-between items-center;
 }
 .icon {

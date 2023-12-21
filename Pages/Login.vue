@@ -2,11 +2,8 @@
 import LoginForm from '~~/Components/LoginForm.vue'
 
 definePageMeta({
-  layout: 'logout-header',
-  middleware: {
-    unauthrizedOnly: true,
-    navigateAuthenticatedTo: '/'
-  }
+  layout: 'logout-header'
+
 })
 </script>
 

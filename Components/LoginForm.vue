@@ -11,9 +11,6 @@ const loginHandler = async () => {
 const testLogin = async () => {
   await signIn('github', { redirect: false })
 }
-const testLogout = async () => {
-  await signOut()
-}
 
 // eslint-disable-next-line no-console
 console.log(data.value)
@@ -34,9 +31,7 @@ console.log(data.value)
     <button type="submit">
       Login
     </button>
-    <button @click="testLogin">
-      TEST LOGIN
-    </button>
+    <GithubLogin @click="testLogin" />
     <button @click="testLogout">
       TEST LOGOUT
     </button>
