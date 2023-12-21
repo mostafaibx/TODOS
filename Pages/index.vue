@@ -1,7 +1,8 @@
 <script setup>
 
 definePageMeta({
-  layout: 'main-header'
+  layout: 'main-header',
+  auth: false
 })
 
 </script>

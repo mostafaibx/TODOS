@@ -4,14 +4,19 @@ const email = ref('')
 const password = ref('')
 const errorMsg = ref('')
 
+const { signIn, signOut, status, data } = useAuth()
 const loginHandler = async () => {
-  const result = await useLogin(email.value, password.value)
-  if (result?.error) {
-    errorMsg.value = result.error
-  }
-  email.value = ''
-  password.value = ''
+  await signIn('credentials', { email: email.value, password: password.value })
 }
+const testLogin = async () => {
+  await signIn('github', { redirect: false })
+}
+const testLogout = async () => {
+  await signOut()
+}
+
+// eslint-disable-next-line no-console
+console.log(data.value)
 
 </script>
 
@@ -25,8 +30,15 @@ const loginHandler = async () => {
     <input id="email" v-model="email" name="email" type="email">
     <label for="password">Password</label>
     <input id="password" v-model="password" name="password" type="password">
+    <p> {{ computed(()=> status==='authenticated' ? 'Authenticated' : 'unauthenticated') }}</p>
     <button type="submit">
       Login
+    </button>
+    <button @click="testLogin">
+      TEST LOGIN
+    </button>
+    <button @click="testLogout">
+      TEST LOGOUT
     </button>
   </form>
 </template>

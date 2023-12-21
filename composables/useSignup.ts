@@ -14,7 +14,6 @@ export const useSignup = async (userData:UserSignupData) => {
   if (error) {
     return { error: error.value?.message, data: null }
   }
-
   navigateTo('/')
   return { error: null, data }
 }

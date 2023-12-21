@@ -45,24 +45,7 @@ export default eventHandler(async (event: H3Event) => {
     }
     // third create the user on db
     await prisma.user.create({ data })
-
-    // implement jwt after asking koko
-    /*     const expiresIn = 15
-    const refreshToken = Math.floor(Math.random() * (1000000000000000 - 1 + 1)) + 1
-    const SECRET = 'dummy'
-
-    const accessToken = sign({ ...data, scope: ['test', 'user'] }, SECRET, { expiresIn })
-    refreshTokens[refreshToken] = {
-      accessToken,
-      data
-    }
-
-    return {
-      token: {
-        accessToken,
-        refreshToken
-      }
-    } */
+    return 'User created successfully'
   } catch (error) {
     return error
   }
