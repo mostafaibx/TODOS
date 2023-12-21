@@ -1,19 +1,13 @@
 
-export const useLogin = async (email:string, password:string) => {
+export const useLogin = async (email:string, password:string, signIn:any) => {
   const validationError = validateUserLogin(email, password)
   if (validationError) {
-    return { error: validationError, data: null }
+    return { error: validationError }
   }
 
-  const { data, error } = await useFetch('/api/auth/login/', {
-    method: 'POST',
-    body: { email, password }
-  })
-  if (error) {
-    return { error: error.value?.message, data: null }
-  }
+  await signIn('credentials', { email, password, redirect: true, callbackUrl: '/' })
 
   navigateTo('/')
   // it should return token if success after implemnting auth | jwt
-  return { error: null, data }
+  return { error: null }
 }

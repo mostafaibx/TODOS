@@ -4,16 +4,19 @@ const email = ref('')
 const password = ref('')
 const errorMsg = ref('')
 
-const { signIn, signOut, status, data } = useAuth()
+const { signIn } = useAuth()
 const loginHandler = async () => {
-  await signIn('credentials', { email: email.value, password: password.value })
+  const { error } = await useLogin(email.value, password.value, signIn)
+  if (error) {
+    errorMsg.value = error
+  } else {
+    email.value = ''
+    password.value = ''
+  }
 }
 const testLogin = async () => {
-  await signIn('github', { redirect: false })
+  await signIn('github', { redirect: true, callbackUrl: '/' })
 }
-
-// eslint-disable-next-line no-console
-console.log(data.value)
 
 </script>
 
@@ -27,14 +30,10 @@ console.log(data.value)
     <input id="email" v-model="email" name="email" type="email">
     <label for="password">Password</label>
     <input id="password" v-model="password" name="password" type="password">
-    <p> {{ computed(()=> status==='authenticated' ? 'Authenticated' : 'unauthenticated') }}</p>
     <button type="submit">
       Login
     </button>
     <GithubLogin @click="testLogin" />
-    <button @click="testLogout">
-      TEST LOGOUT
-    </button>
   </form>
 </template>
 
@@ -62,4 +61,3 @@ h1 {
   @apply text-red-500 text-center text-xl font-mono mb-2;
 }
 </style>
-~~/composables/useLogin

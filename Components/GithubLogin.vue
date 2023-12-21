@@ -8,7 +8,7 @@
 
 <style scoped>
 .container {
-@apply flex justify-around w-9/12 h-10 items-center p-2 bg-slate-800 rounded-lg hover:bg-slate-600 hover:scale-105 transition-all duration-200;
+@apply flex justify-around w-7/12 h-10 items-center p-2 bg-slate-800 rounded-lg hover:bg-slate-600 hover:scale-105 transition-all duration-200;
 }
 .container p {
   @apply text-white font-mono;
