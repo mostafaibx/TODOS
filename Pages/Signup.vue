@@ -2,11 +2,7 @@
 import SignupForm from '~~/Components/SignupForm.vue'
 
 definePageMeta({
-  layout: 'main-header',
-  middleware: {
-    unauthrizedOnly: true,
-    navigateAuthenticatedTo: '/'
-  }
+  layout: 'main-header'
 })
 </script>
 

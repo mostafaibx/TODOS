@@ -15,7 +15,7 @@ const isAuthenticated = computed(() => {
           <NuxtLink to="/" class="icon">
             dashboard
           </NuxtLink>
-          <NuxtLink to="/Insights" class="icon">
+          <NuxtLink v-if="isAuthenticated" to="/Insights" class="icon">
             Insights
           </NuxtLink>
           <NuxtLink v-if="!isAuthenticated" to="/Signup" class="icon">

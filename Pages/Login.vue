@@ -3,7 +3,6 @@ import LoginForm from '~~/Components/LoginForm.vue'
 
 definePageMeta({
   layout: 'main-header'
-
 })
 </script>
 
