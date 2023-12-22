@@ -16,9 +16,8 @@ export default NuxtAuthHandler({
           email: user.email!
         }
       })
-      if (userExists !== []) {
-        await $fetch(
-          '/api/auth/register',
+      if (userExists.length === 0) {
+        await $fetch('/api/auth/register',
           {
             method: 'POST',
             body: {
@@ -26,11 +25,11 @@ export default NuxtAuthHandler({
               name: user.name!,
               password: 'password'
             }
-          }
-        )
+          })
         return true
       } else {
-      return true
+        return true
+      }
     }
   },
   providers: [
@@ -57,10 +56,7 @@ export default NuxtAuthHandler({
         if (user) {
           return user
         } else {
-          // If you return null then an error will be displayed advising the user to check their details.
           return null
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
       }
     })
