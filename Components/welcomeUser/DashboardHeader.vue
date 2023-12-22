@@ -1,12 +1,13 @@
 <script setup>
 import ClockComp from './ClockComp.vue'
 
+const { data } = useAuth()
 </script>
 
 <template>
   <div class="dashboard-header">
     <h1 class="msg">
-      Hello! UserName
+      Hello! {{ data?.user?.name }}
     </h1>
     <ClockComp />
   </div>

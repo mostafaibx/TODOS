@@ -22,7 +22,7 @@ model Task {
 model List {
   id          String @id @default(uuid())
   title       String
-  color      String
+  color       String
   icon        String
   tasks       Task[]
   user        User @relation(fields: [userId], references: [id])
@@ -32,8 +32,9 @@ model List {
 model User {
   id          String @id @default(uuid())
   name        String
-  email       String
-  photo       String
-  password    String
+  email       String @unique
+  photo       String @default("https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=740&t=st=1703258527~exp=1703259127~hmac=b3e3e89fd79916353ff93bff7ec7f1f31b0c676bedb54011af330b268ca4cfcb")
+  password    String?
+  createdAt   DateTime @default(now())
   lists       List[]
 }
