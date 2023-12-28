@@ -6,11 +6,7 @@ export default eventHandler(async (event: H3Event) => {
   const session = await getServerSession(event)
   if (!session) {
     return { status: 'unauthenticated!' }
-  } else {
-    // eslint-disable-next-line no-console
-    console.log(session.user)
   }
-
   // eslint-disable-next-line no-console
   console.log(session)
   try {
