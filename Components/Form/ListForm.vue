@@ -1,13 +1,27 @@
 <script setup lang="ts">
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import ColorPicker from './ColorPicker.vue'
 import IconsPicker from './IconsPicker.vue'
 import { List } from '~~/types'
 import { validateList } from '~~/utils/validations'
-
-const emit = defineEmits(['listAdded'])
+const queryClient = useQueryClient()
 
 const errorMsg = ref('')
 const { data } = useAuth()
+
+const addList = async (listData: List) => {
+  await useFetch('/api/list/', {
+    method: 'POST',
+    body: listData
+  })
+}
+
+const { mutate: addListMutation } = useMutation({
+  mutationFn: addList,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['lists'] })
+  }
+})
 
 // check form handling
 const addListHandler = async (e: any) => {
@@ -24,18 +38,9 @@ const addListHandler = async (e: any) => {
     return
   }
 
-  const { error } = await useFetch('/api/list/', {
-    method: 'POST',
-    body: listData
-  })
-
-  if (error.value) {
-    errorMsg.value = error.value.message
-    return
-  }
-
-  emit('listAdded', listData)
+  addListMutation(listData)
 }
+
 </script>
 
 <template>

@@ -11,6 +11,7 @@ export const useAddTask = async (task: Task) => {
     method: 'POST',
     body: task
   })
+
   if (error.value) {
     return { error: error.value?.message, data: null }
   }

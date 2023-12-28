@@ -13,9 +13,6 @@ const { data } = useAuth()
     </h1>
     <ClockComp />
   </div>
-  <DevOnly>
-    <pre class="text-white">{{ data }}</pre>
-  </DevOnly>
 </template>
 
 <style scoped>

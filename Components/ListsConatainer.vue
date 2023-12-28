@@ -1,4 +1,5 @@
 <script setup lang='ts'>
+import { useQuery } from '@tanstack/vue-query'
 import ListForm from './Form/ListForm.vue'
 import CreateListcard from '~~/Components/CreateListcard.vue'
 import ListCard from '~~/Components/ListCard.vue'
@@ -6,17 +7,13 @@ import { List } from '~~/types'
 
 const showForm = ref(false)
 
-// check how to handle data fetching
-const { data } = await useFetch('/api/list/')
-
-const lists: List[] = data.value as List[]
+const { data: lists } = useQuery<List[]>({
+  queryKey: ['lists'],
+  queryFn: async () => { const { data } = await useFetch('/api/list'); return data.value as List[] }
+})
 
 const selectListHandler = (e: string) => {
   navigateTo(`/list/${e}`)
-}
-
-const addListHandler = (payload: List) => {
-  lists.push(payload)
 }
 
 const showFormHandler = () => {
@@ -32,11 +29,11 @@ const showFormHandler = () => {
         v-for="list in lists"
         :key="list.id"
         :list="list"
-        @click="selectListHandler(list.id)"
+        @click="selectListHandler(list.id!)"
       />
       <CreateListcard v-if="!showForm" @click="showFormHandler" />
       <div v-if="showForm" class="list-form" @click="showFormHandler">
-        <ListForm class="add-list" @list-added="addListHandler" @click.stop />
+        <ListForm class="add-list" @click.stop />
       </div>
     </div>
   </div>

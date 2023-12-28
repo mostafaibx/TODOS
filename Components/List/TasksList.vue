@@ -2,6 +2,7 @@
 import { PropType } from 'nuxt/dist/app/compat/capi'
 import TaskItem from './TaskItem.vue'
 import { Task } from '~~/types'
+
 defineEmits(['taskDeleted'])
 defineProps({
   tasks: {
@@ -9,6 +10,7 @@ defineProps({
     default: () => []
   }
 })
+
 </script>
 
 <template>
@@ -17,7 +19,6 @@ defineProps({
       v-for="t in tasks"
       :key="t.id"
       :task="t"
-      @task-deleted="$emit('taskDeleted', $event)"
     />
   </ul>
 </template>

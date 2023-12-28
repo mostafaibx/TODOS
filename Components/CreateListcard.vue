@@ -12,7 +12,7 @@
 
 <style scoped>
 .list-card {
-  @apply flex flex-col-reverse w-60 h-60  border-2 border-yellow-400 hover:shadow-sm hover:scale-105 transition-all duration-200 rounded-3xl rounded-tl-none shadow-2xl relative;
+  @apply flex flex-col-reverse w-32 h-32 md:w-52 md:h-52 lg:w-56 lg:h-56 xl:w-60 xl:h-60 border-2 border-yellow-400 hover:shadow-sm hover:scale-105 transition-all duration-200 rounded-3xl rounded-tl-none shadow-2xl relative;
 }
 .list-card::after {
   @apply content-['+'] flex justify-center items-center text-9xl font-mono font-extrabold absolute top-0 left-0 w-full h-full bg-sky-400 rounded-3xl rounded-tl-none bg-opacity-30;

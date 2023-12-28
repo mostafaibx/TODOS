@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { useQuery } from '@tanstack/vue-query'
 import TaskInput from '~~/Components/List/TaskInput.vue'
 import TasksList from '~~/Components/List/TasksList.vue'
-import { List, Task } from '~~/types'
+import { List } from '~~/types'
 
 const addTask = ref(false)
 
@@ -14,33 +15,31 @@ const closeInput = (e) => {
   }
 }
 
-// check how to handle data fetching
-const { data } = await useFetch(`/api/list/${useRoute().params.id}`)
-const list = data.value as unknown as List
+const { data: list } = useQuery<List>({
+  queryKey: ['todoList'],
+  queryFn: async () => { const { data } = await useFetch(`/api/list/${useRoute().params.id}/`); return data.value as List },
+  refetchOnMount: true
+})
 
-const updateTaskList = (emittedData: { payload: Task | string, source: string }) => {
-  const tasks = list.tasks
-  const updatedTasks = useUpdateTasks(emittedData, tasks)
-  list.tasks = updatedTasks
-}
-
+// eslint-disable-next-line no-console
+console.log(list.value)
 </script>
 
 <template>
   <div
     class="todo-list"
-    :style="'background-color: ' + list.color"
+    :style="'background-color: ' + list?.color"
     @click="closeInput"
   >
     <h1 class="title">
-      {{ list.title }}
+      {{ list?.title }}
     </h1>
     <div class="tasks-wrapper">
-      <TasksList :tasks="list.tasks" @task-deleted="updateTaskList" />
+      <TasksList :tasks="list?.tasks || []" />
       <button @click="showInput">
         > Create a new Task...
       </button>
-      <TaskInput v-if="addTask" @task-added="updateTaskList" />
+      <TaskInput v-if="addTask" />
     </div>
   </div>
 </template>

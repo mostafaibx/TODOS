@@ -1,14 +1,8 @@
 import type { H3Event } from 'h3'
-import { getServerSession } from '#auth'
 
 export default eventHandler(async (event: H3Event) => {
   const prisma = event.context.prisma
   const { params } = event.context
-
-  const session = await getServerSession(event)
-  if (!session) {
-    return { status: 'unauthenticated!' }
-  }
 
   try {
     const list = await prisma.list.findFirst({ where: { id: params.id } })

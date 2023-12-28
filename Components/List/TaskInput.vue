@@ -1,22 +1,41 @@
 <script setup lang="ts">
+import { useQueryClient, useMutation } from '@tanstack/vue-query'
 import { Task } from '~~/types'
 
-const emit = defineEmits(['taskAdded'])
+const queryClient = useQueryClient()
 
 const errorMsg = ref('')
-const addTaskHandler = async (e) => {
+const titleRef = ref('')
+
+const addTaskFn = async (task: Task) => {
+  await useFetch('/api/task/', {
+    method: 'POST',
+    body: task
+  })
+}
+
+const { mutate: addTaskMutation } = useMutation({
+  mutationFn: addTaskFn,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['todoList'] })
+  }
+})
+
+const addTaskHandler = () => {
   const task: Task = {
-    title: e.target.listName.value,
+    title: titleRef.value,
     completed: false,
     listId: useRoute().params.id as string
   }
-
-  const result = useAddTask(task)
-  if (result?.error) {
-    errorMsg.value = result.error
+  if (titleRef.value === '') {
+    errorMsg.value = 'Please Enter Task Name'
+  } else {
+    addTaskMutation(task)
+    titleRef.value = ''
+    errorMsg.value = ''
   }
-  emit('taskAdded', { payload: task, source: 'taskAdded' })
 }
+
 </script>
 
 <template>
@@ -25,6 +44,7 @@ const addTaskHandler = async (e) => {
     >
     <input
       id="listName"
+      v-model="titleRef"
       class="input-task"
       type="text"
       placeholder="Enter Task Name"

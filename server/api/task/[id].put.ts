@@ -17,9 +17,9 @@ export default eventHandler(async (event: H3Event) => {
     }
 
     const updatedTask = await prisma.task.update({
-      where: { id: params.id },
+      where: { id: params?.id },
       data: {
-        statu: data.completed
+        completed: data.completed
       }
     })
 

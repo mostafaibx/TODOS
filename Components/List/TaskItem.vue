@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { PropType } from 'nuxt/dist/app/compat/capi'
+import { useQueryClient, useMutation } from '@tanstack/vue-query'
 import { Task } from '~~/types'
+
+const queryClient = useQueryClient()
 
 const props = defineProps({
   task: {
@@ -9,37 +12,49 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['taskDeleted'])
-const completed = ref(props.task.completed)
+const completed = computed(() => {
+  return props.task.completed
+})
 
-// handle error
-const taskStatuHandler = async () => {
-  completed.value = !completed.value
-  await useFetch(`/api/task/${props.task.id}`, {
+const statusChangeFn = async ({ completed, taskId }: { completed: boolean, taskId: string }) => {
+  await useFetch(`/api/task/${taskId}`, {
     method: 'PUT',
-    body: { completed: completed.value }
+    body: { completed: !completed }
   })
 }
 
-const deleteTaskHandler = async () => {
-  const taskId = props.task.id
-  await useFetch(`/api/task/${props.task.id}`, {
+const { mutate: taskStatuMutation } = useMutation({
+  mutationFn: statusChangeFn,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['todoList'] })
+  }
+})
+
+const deleteTaskFn = async (taskId: string) => {
+  await useFetch(`/api/task/${taskId}`, {
     method: 'DELETE'
   })
-  emit('taskDeleted', { payload: taskId, source: 'taskDeleted' })
 }
+
+const { mutate: deleteTaskMutation } = useMutation({
+  mutationFn: deleteTaskFn,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['todoList'] })
+  }
+})
+
 </script>
 
 <template>
   <li class="todo-item">
-    <p :class="{ done: !completed, undone: completed }">
+    <p :class="{ done: completed, undone: !completed }">
       > {{ task.title }}
     </p>
     <div class="action">
-      <h1 @click="taskStatuHandler">
-        {{ completed ? "Done" : "Undone" }}
+      <h1 @click="() => taskStatuMutation({completed: completed, taskId: props.task.id!})">
+        {{ !completed ? "Done" : "Undone" }}
       </h1>
-      <h1 class="delete" @click="deleteTaskHandler">
+      <h1 class="delete" @click="() => deleteTaskMutation(props.task.id!)">
         Delete
       </h1>
     </div>

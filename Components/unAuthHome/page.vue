@@ -12,8 +12,12 @@
     </p>
     <p>Please login to be able to use the app</p>
     <div class="buttons">
-      <button>Signup</button>
-      <button>Login</button>
+      <NuxtLink to="/signup">
+        <button>Signup</button>
+      </NuxtLink>
+      <NuxtLink to="/login">
+        <button>Login</button>
+      </NuxtLink>
     </div>
   </div>
 </template>
