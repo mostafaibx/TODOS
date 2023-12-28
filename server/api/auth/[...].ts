@@ -42,14 +42,10 @@ export default NuxtAuthHandler({
   ],
   callbacks: {
     jwt: ({ token, user }) => {
-      // eslint-disable-next-line no-console
-      console.log('token', token)
       return { ...token, userId: user?.id }
     },
     session: ({ session, user, token }) => {
       session.userId = token?.sub || user?.id
-      // eslint-disable-next-line no-console
-      console.log('session', session)
       return session
     },
     signIn: async ({ user }) => {
