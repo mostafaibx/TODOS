@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import type { H3Event } from 'h3'
 
 /* import { sign } from 'jsonwebtoken'
 const refreshTokens: Record<number, Record<string, any>> = {} */
@@ -8,7 +9,7 @@ const refreshTokens: Record<number, Record<string, any>> = {} */
 // third check if the password is correct
 // fourth return the user
 
-export default eventHandler(async (event) => {
+export default eventHandler(async (event: H3Event) => {
   const prisma = event.context.prisma
 
   // Creating a schema with zod for validation of the request

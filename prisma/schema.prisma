@@ -37,4 +37,17 @@ model User {
   password    String?
   createdAt   DateTime @default(now())
   lists       List[]
+  sessions    Session[]
+}
+
+
+model Session {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  user        User     @relation(fields: [userId], references: [id])
+  accessToken String   @unique
+  sessionToken String @unique
+  refreshToken String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
