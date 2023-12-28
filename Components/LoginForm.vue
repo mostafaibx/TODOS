@@ -14,7 +14,7 @@ const loginHandler = async () => {
     password.value = ''
   }
 }
-const testLogin = async () => {
+const githubLoginHandler = async () => {
   await signIn('github', { redirect: true, callbackUrl: '/' })
 }
 
@@ -33,7 +33,7 @@ const testLogin = async () => {
     <button type="submit">
       Login
     </button>
-    <GithubLogin @click="testLogin" />
+    <GithubLogin @click="githubLoginHandler" />
   </form>
 </template>
 

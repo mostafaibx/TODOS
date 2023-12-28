@@ -1,28 +1,28 @@
-import type { H3Event } from "h3";
+import type { H3Event } from 'h3'
 
 export default eventHandler(async (event: H3Event) => {
-  const prisma = event.context.prisma;
-  const { params } = event.context;
+  const prisma = event.context.prisma
+  const { params } = event.context
 
   try {
-    const task = await prisma.task.findFirst({ where: { id: params.id } });
+    const task = await prisma.task.findFirst({ where: { id: params.id } })
     if (!task) {
       throw createError({
         statusCode: 404,
-        statusMessage: `Failed to find task with id ${params.id}`,
-      });
+        statusMessage: `Failed to find task with id ${params.id}`
+      })
     }
 
-    await prisma.task.delete({ where: { id: params.id } });
+    await prisma.task.delete({ where: { id: params.id } })
 
     return {
       statusCode: 201,
-      body: JSON.stringify({ message: "Task deleted successfully" }),
-    };
+      body: JSON.stringify({ message: 'Task deleted successfully' })
+    }
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Internal Server Error" }),
-    };
+      body: JSON.stringify({ error: 'Internal Server Error' })
+    }
   }
-});
+})

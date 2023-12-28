@@ -1,20 +1,45 @@
 <script setup lang='ts'>
 import { PropType } from 'nuxt/dist/app/compat/capi'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { List } from '~~/types'
 
+const queryClient = useQueryClient()
 const props = defineProps({
   list: {
     type: Object as PropType<List>,
     required: true
   }
 })
+
+const deleteListFn = async (listId: string) => {
+  const { data, error } = await useFetch(`/api/list/${listId}`, {
+    method: 'DELETE'
+  })
+  // eslint-disable-next-line no-console
+  console.log(data, error)
+}
+
+const { mutate: deleteListMutation } = useMutation({
+  mutationFn: deleteListFn,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['lists'] })
+  }
+})
+
+const deleteListHandler = (e) => {
+  e.stopPropagation()
+  deleteListMutation(e.target.id)
+  // eslint-disable-next-line no-console
+  console.log('list deleted', e.target.id)
+}
+
 </script>
 
 <template>
   <div>
     <div class="list-card" :style="'background-color: ' + props.list.color">
       <h1 class="icon" v-html="list.icon" />
-      <h1 class="close">
+      <h1 :id="props.list.id" class="close" @click="deleteListHandler">
         X
       </h1>
       <div class="list-content">

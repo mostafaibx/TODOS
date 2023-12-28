@@ -13,10 +13,6 @@ const refreshTokens: Record<number, Record<string, any>> = {} */
 export default eventHandler(async (event: H3Event) => {
   const prisma = event.context.prisma
 
-  const session = await getServerSession(event)
-  // eslint-disable-next-line no-console
-  console.log('session', session)
-
   // Creating a schema with zod for validation of the request
   const credentials = z.object({
     email: z.string().email(),
@@ -44,5 +40,6 @@ export default eventHandler(async (event: H3Event) => {
       statusMessage: 'Incorrect password'
     })
   }
+
   return user
 })
