@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import type { H3Event } from 'h3'
+import { getServerSession } from '#auth'
 
 /* import { sign } from 'jsonwebtoken'
 const refreshTokens: Record<number, Record<string, any>> = {} */
@@ -11,6 +12,10 @@ const refreshTokens: Record<number, Record<string, any>> = {} */
 
 export default eventHandler(async (event: H3Event) => {
   const prisma = event.context.prisma
+
+  const session = await getServerSession(event)
+  // eslint-disable-next-line no-console
+  console.log('session', session)
 
   // Creating a schema with zod for validation of the request
   const credentials = z.object({

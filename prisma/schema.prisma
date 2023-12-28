@@ -33,21 +33,39 @@ model User {
   id          String @id @default(uuid())
   name        String
   email       String @unique
-  photo       String @default("https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=740&t=st=1703258527~exp=1703259127~hmac=b3e3e89fd79916353ff93bff7ec7f1f31b0c676bedb54011af330b268ca4cfcb")
+  emailVerified DateTime? @map("email_verified")
+  image       String @default("https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=740&t=st=1703258527~exp=1703259127~hmac=b3e3e89fd79916353ff93bff7ec7f1f31b0c676bedb54011af330b268ca4cfcb")
   password    String?
   createdAt   DateTime @default(now())
   lists       List[]
   sessions    Session[]
+  account     Account[]
 }
 
 
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
 model Session {
-  id          String   @id @default(uuid())
-  userId      String   @map("user_id")
-  user        User     @relation(fields: [userId], references: [id])
-  accessToken String   @unique
-  sessionToken String @unique
-  refreshToken String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

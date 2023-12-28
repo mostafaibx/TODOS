@@ -1,6 +1,7 @@
 import GithubProvider from 'next-auth/providers/github'
 import Credentials from 'next-auth/providers/credentials'
 import { PrismaClient } from '@prisma/client'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { NuxtAuthHandler } from '#auth'
 
 const prisma = new PrismaClient()
@@ -9,8 +10,14 @@ export default NuxtAuthHandler({
   pages: {
     signIn: '/login'
   },
+  adapter: PrismaAdapter(prisma),
   callbacks: {
-    signIn: async ({ user }) => {
+    session: ({ session, user }) => {
+      // eslint-disable-next-line no-console
+      console.log('user from session', user)
+      return session
+    },
+    signIn: ({ user }) => {
       const userExists = await prisma.user.findMany({
         where: {
           email: user.email!
