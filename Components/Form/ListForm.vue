@@ -7,11 +7,12 @@ import { validateList } from '~~/utils/validations'
 const emit = defineEmits(['listAdded'])
 
 const errorMsg = ref('')
+const { data } = useAuth()
 
 // check form handling
 const addListHandler = async (e: any) => {
   const listData: List = {
-    userId: 'id',
+    userId: data.value?.userId || '',
     title: e.target.listName.value,
     color: e.target.color.value,
     icon: e.target.icon.value
@@ -53,6 +54,9 @@ const addListHandler = async (e: any) => {
       <button>
         Add
       </button>
+      <DevOnly>
+        <pre class="text-white">{{ data?.userId|| 'userId not found' }}</pre>
+      </DevOnly>
     </form>
   </div>
 </template>
