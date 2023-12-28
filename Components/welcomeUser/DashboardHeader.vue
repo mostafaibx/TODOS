@@ -1,7 +1,9 @@
 <script setup>
+
 import ClockComp from './ClockComp.vue'
 
 const { data } = useAuth()
+
 </script>
 
 <template>

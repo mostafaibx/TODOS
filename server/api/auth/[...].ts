@@ -11,34 +11,6 @@ export default NuxtAuthHandler({
     signIn: '/login'
   },
   adapter: PrismaAdapter(prisma),
-  callbacks: {
-    session: ({ session, user }) => {
-      // eslint-disable-next-line no-console
-      console.log('user from session', user)
-      return session
-    },
-    signIn: ({ user }) => {
-      const userExists = await prisma.user.findMany({
-        where: {
-          email: user.email!
-        }
-      })
-      if (userExists.length === 0) {
-        await $fetch('/api/auth/register',
-          {
-            method: 'POST',
-            body: {
-              email: user.email!,
-              name: user.name!,
-              password: 'password'
-            }
-          })
-        return true
-      } else {
-        return true
-      }
-    }
-  },
   providers: [
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     GithubProvider.default({
@@ -67,5 +39,32 @@ export default NuxtAuthHandler({
         }
       }
     })
-  ]
+  ],
+  callbacks: {
+    session: ({ session, user }) => {
+      session.userId = user.id
+      return session
+    },
+    signIn: async ({ user }) => {
+      const userExists = await prisma.user.findMany({
+        where: {
+          email: user.email!
+        }
+      })
+      if (userExists.length === 0) {
+        await $fetch('/api/auth/register',
+          {
+            method: 'POST',
+            body: {
+              email: user.email!,
+              name: user.name!,
+              password: 'password'
+            }
+          })
+        return true
+      } else {
+        return true
+      }
+    }
+  }
 })
