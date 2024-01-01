@@ -7,9 +7,11 @@ import { List } from '~~/types'
 
 const showForm = ref(false)
 
+const headers = useRequestHeaders(['cookie']) as HeadersInit
+
 const { data: lists } = useQuery<List[]>({
   queryKey: ['lists'],
-  queryFn: async () => { const { data } = await useFetch('/api/list'); return data.value as List[] }
+  queryFn: async () => { const { data } = await useFetch('/api/list', { headers }); return data.value as List[] }
 })
 
 const selectListHandler = (e: string) => {
@@ -19,7 +21,6 @@ const selectListHandler = (e: string) => {
 const showFormHandler = () => {
   showForm.value = !showForm.value
 }
-
 </script>
 
 <template>
