@@ -4,16 +4,17 @@ export const useSignup = async (userData:UserSignupData) => {
   const validationError = validateUserSignup(userData)
 
   if (validationError) {
-    return { error: validationError, data: null }
+    return { error: validationError }
   }
 
-  const { data, error } = await useFetch('/api/auth/register/', {
+  const { error } = await useFetch('/api/auth/register/', {
     method: 'POST',
     body: userData
   })
   if (error) {
     return { error: error.value?.message, data: null }
+  } else {
+    navigateTo('/login')
+    return { error: null }
   }
-  navigateTo('/')
-  return { error: null, data }
 }

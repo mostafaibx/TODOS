@@ -1,17 +1,6 @@
 import type { H3Event } from 'h3'
 import { z } from 'zod'
 
-/* import { sign } from 'jsonwebtoken'
-const refreshTokens: Record<number, Record<string, any>> = {}
- */
-// first create a schema with zod
-// second validate the date with zod
-// third check if the user exists by email
-// fourth create the user on db
-// fifth generate access token by jwt
-// sixth generate refresh token by jwt
-// fifth return the tokens
-
 export default eventHandler(async (event: H3Event) => {
   const prisma = event.context.prisma
 

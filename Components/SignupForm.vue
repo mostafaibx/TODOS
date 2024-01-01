@@ -1,5 +1,4 @@
 <script setup lang='ts'>
-
 const username = ref('')
 const email = ref('')
 const password = ref('')
@@ -8,7 +7,7 @@ const errorMsg = ref('')
 
 const signupHandler = async () => {
   const userData = {
-    name: username.value,
+    username: username.value,
     email: email.value,
     password: password.value,
     confirmPassword: confirmPassword.value
