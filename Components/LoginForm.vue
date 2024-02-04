@@ -18,6 +18,8 @@ const githubLoginHandler = async () => {
   await signIn('github', { redirect: true, callbackUrl: '/' })
 }
 
+
+
 </script>
 
 <template>
