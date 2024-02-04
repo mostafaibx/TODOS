@@ -17,12 +17,6 @@ export default defineNuxtConfig({
     },
     globalAppMiddleware: {
       isEnabled: true
-    },
-    strategies: {
-      authjs: {
-        provider: 'authjs',
-        origin: 'https://todosnuxt-57x9frz3j-mostafaibx.vercel.app/'
-      }
     }
   }
 })
