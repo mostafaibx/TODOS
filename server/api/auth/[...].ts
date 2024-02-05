@@ -7,6 +7,7 @@ import { NuxtAuthHandler } from '#auth'
 const prisma = new PrismaClient()
 
 export default NuxtAuthHandler({
+  secret: 'my-superb-secret',
   pages: {
     signIn: '/login'
   },
