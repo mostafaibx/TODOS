@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     globalAppMiddleware: {
       isEnabled: true
     },
-    origin: 'https://todos-opal-xi.vercel.app/'
+    origin: 'https://todos-opal-xi.vercel.app/',
+    pages: true
   }
 })

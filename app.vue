@@ -2,7 +2,6 @@
 <template>
   <div>
     <NuxtLayout>
-      <div>hallo from app</div>
       <NuxtPage />
     </NuxtLayout>
   </div>
