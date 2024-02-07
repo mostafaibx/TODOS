@@ -3,6 +3,12 @@ import { setAbsoluteSqliteDatabaseUrlForPrisma } from './prisma/utils'
 setAbsoluteSqliteDatabaseUrlForPrisma()
 
 export default defineNuxtConfig({
+  nitro: {
+    preset: 'vercel',
+    output: {
+      dir: '../../.vercel/output'
+    }
+  },
   runtimeConfig: {
     version: '0.0.1'
   },
@@ -18,7 +24,6 @@ export default defineNuxtConfig({
     globalAppMiddleware: {
       isEnabled: true
     },
-    origin: 'https://todos-opal-xi.vercel.app/',
-    pages: true
+    origin: 'https://todos-opal-xi.vercel.app/'
   }
 })
